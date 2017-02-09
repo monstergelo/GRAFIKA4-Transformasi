@@ -1,4 +1,5 @@
 #include "gambar.h"
+#include "framebuffer_init.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -13,10 +14,6 @@ void *preUpdate();		//(1)cek inputuser
 void updatePosisi();	//(1)ubah posisi. (2)spawnObjek, (3)drawBuffer
 void postUpdate();	 	//(1)cek kolisi, (2)loadbuffer ke layar
 
-objekTabrak pesawat[10];
-objekTabrak peluru[10];
-int pesawatterakhir;
-int peluruterakhir;
 titik pl0 = {0,0};
 titik pl1 = {1366,700};
 pthread_t thread0; 		//thread input capture
@@ -46,7 +43,6 @@ int main(){
 	init_fb();
 	warna c = {255,255,255,255};
 
-	spawnObjek('a',p0);
 	refreshBuffer(pl0,pl1);
 	loadBuffer();
 
@@ -123,9 +119,7 @@ void updatePosisi(){
 	}
 
 	//CEK FLAG
-	if(prime.isTembak){
 
-	}
 
 	refreshBuffer(pl0,pl1);
 	// gambarObjek();
