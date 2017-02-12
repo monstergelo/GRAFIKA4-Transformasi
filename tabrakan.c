@@ -73,6 +73,30 @@ void jalanObjek(){
 	}
 }
 
+void setupCitraPesawat(objekTabrak *pesawat) {
+	pesawat->citra = (titik*) malloc(8 * sizeof(titik));
+	titik* citra = pesawat->citra;
+	int xp = pesawat->posisi.x; int yp = pesawat->posisi.y;
+	citra[0].x = -100; citra[0].y = -90;
+	citra[1].x = -75; citra[1].y = -90;
+	citra[2].x = -50; citra[2].y = -75;
+	citra[3].x = 50; citra[3].y = -75;
+	citra[4].x = 75; citra[4].y = -50;
+	citra[5].x = 50, citra[5].y = -25;
+	citra[6].x = -50; citra[6].y = -25;
+	citra[7].x = -100; citra[7].y = -75;
+}
+
+void setupCitraPeluru(objekTabrak *peluru) {
+	peluru->citra = (titik*) malloc(5 * sizeof(titik));
+	titik* citra = peluru->citra;
+	int xp = peluru->posisi.x; int yp = peluru->posisi.y;
+	citra[0].x = -10; citra[0].y = 25;
+	citra[1].x = -10; citra[1].y = 0;
+	citra[2].x = 0; citra[2].y = -25;
+	citra[3].x = 10; citra[3].y = 0;
+	citra[4].x = 10; citra[4].y = 25;
+}
 
 //membuat objek baru(a=pesawat; b=peluru) pada posisi p
 void spawnObjek(char t, titik p){
@@ -82,16 +106,18 @@ void spawnObjek(char t, titik p){
 		pesawat[pesawatterakhir].arah = 0;
 		pesawat[pesawatterakhir].kecepatan = 5;
 		pesawat[pesawatterakhir].status = 0;
+		setupCitraPesawat(&pesawat[pesawatterakhir]);
+		// Set
 		pesawatterakhir++;
 
-	}else if (t=='b'){
+	} else if (t=='b') {
 
 		peluru[peluruterakhir].posisi = p;
 		peluru[peluruterakhir].kecepatan = 25;
 		peluru[peluruterakhir].arah = 90 - prime.kemiringan;
 		peluru[peluruterakhir].status = 0;
+		setupCitraPeluru(&peluru[peluruterakhir]);
 		peluruterakhir++;
-
 	}
 }
 
@@ -134,7 +160,23 @@ void gambarHancur(titik p) {
 
 //**************************************************************************************************
 void gambarObjek() {
-	
+	warna green = {1, 255, 1, 255};
+	warna red = {255, 1, 1, 255};
+	warna black = {0, 0, 0, 255};
+
+	// Draw airplane
+	for (int i = 0; i < pesawatterakhir; i++) {
+		if (pesawat[i].status == 0) {
+			bufferDrawPlaneSolidCitra(pesawat[i].citra, pesawat[i].posisi, green, red, 8);
+		}
+	}
+
+	// Draw bullet
+	for (int i = 0; i < peluruterakhir; i++) {
+		if (peluru[i].status == 0) {
+			bufferDrawPlaneSolidCitra(peluru[i].citra, peluru[i].posisi, green, red, 5);
+		}
+	}
 }
 
 //**************************************************************************************************

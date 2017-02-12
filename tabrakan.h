@@ -15,7 +15,7 @@ extern objekTabrak pesawat[10];
 extern objekTabrak peluru[10];
 extern objekTabrak objek[10];
 
-void cekTabrakanObjek(int offset);   //cek apakah terdapat peluru yang berada sejauh oTaffset dari pesawat, 
+void cekTabrakanObjek(int offset);   //cek apakah terdapat peluru yang berada sejauh oTaffset dari pesawat,
 								     //jika iya kedua objek memiliki isTabrakan tarue
 void initPesawat();
 void hancurObjek(objekTabrak* o);	 //hilangkan objek pesawat dari memori
@@ -24,4 +24,6 @@ void spawnObjek(char t, titik p);	 //membuat objek baru(a=pesawat; b=peluru) pad
 //=============================================================================================================================================
 void gambarObjek();					 //menggambar seluruh objek dengan ke buffer, posisi objek berada di dalam gambar;
 void gambarHancur(titik p);			 //menggambar animasi hancur pada titik p;
-	
+
+void setupCitraPesawat(objekTabrak *pesawat);
+void setupCitraPeluru(objekTabrak *peluru);
