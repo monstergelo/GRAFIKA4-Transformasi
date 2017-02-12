@@ -26,7 +26,7 @@ struct input_event ev;	//something-something keylogger
 ssize_t n;
 int user_input = -99;
 int keypress = 0;
-titik p0 = {400,100};
+titik p0 = {100,350};
 titik p1 = {600,650};
 titik p2 = {300,650};
 titik p3 = {500,650};
@@ -40,8 +40,8 @@ int main(){
 //**setup-pendengar-keyboard********************************************************************
 	// Input keyboard device file
     //const char *dev = "/dev/input/by-id/usb-_USB_Keyboard-event-kbd";
-    const char *dev = "/dev/input/event3";
-    //const char *dev = "/dev/input/by-id/usb-_USB_Keyboard-event-kbd";
+    //const char *dev = "/dev/input/event3";
+    const char *dev = "/dev/input/by-id/usb-_USB_Keyboard-event-kbd";
     // Open device for reference
     fd = open(dev, O_RDONLY);
 
@@ -64,9 +64,10 @@ int main(){
 	pt[1] = p0;
 	pt[2] = p1;
 
-	for(int in=0; in<100; in++)
+	for(int in=0; in<10; in++)
 	{
 		peluru[in].status = -1;
+		pesawat[in].status = -1;
 	}
 
 	spawnObjek('a',p0);
@@ -169,7 +170,7 @@ void updatePosisi(){
 }
 
 void postUpdate(){
-	cekTabrakanObjek(30);
+	cekTabrakanObjek(100);
 
 	for(int i=0; i<1; i++){
 		if(pesawat[i].status == 1){

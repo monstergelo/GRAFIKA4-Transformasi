@@ -1,5 +1,6 @@
 #include "tabrakan.h"
 #include "tembakan.h"
+#include "rotasi.h"
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
@@ -47,24 +48,26 @@ void hancurObjek(objekTabrak* o){
 void jalanObjek(){
 	int qq = pesawatterakhir;
 	int ww = peluruterakhir;
+	titik putar = {600,1050};
 
 	double val = PI / 180.0;
 
+	//jalanpesawat==========================================================================================
 	for (int i =0; i<qq ; i++){
 
 		if(pesawat[i].status==0){
-
-			if(pesawat[i].arah<=180){
-				pesawat[i].posisi.x = pesawat[i].posisi.x+(cos(pesawat[i].arah*val)*pesawat[i].kecepatan);
-				pesawat[i].posisi.y = pesawat[i].posisi.y+(sin(pesawat[i].arah*val)*pesawat[i].kecepatan);
-			}else{
-				pesawat[i].posisi.x = pesawat[i].posisi.x+(cos(pesawat[i].arah*val)*pesawat[i].kecepatan);
-				pesawat[i].posisi.y = pesawat[i].posisi.y-(sin(pesawat[i].arah*val)*pesawat[i].kecepatan);
-			}
+			titik temp = pesawat[i].posisi;
+			pesawat[i].posisi = rotasi(putar, temp, 1);
+			// if(pesawat[i].arah<=180){
+			// 	pesawat[i].posisi.x = pesawat[i].posisi.x+(cos(pesawat[i].arah*val)*pesawat[i].kecepatan);
+			// 	pesawat[i].posisi.y = pesawat[i].posisi.y+(sin(pesawat[i].arah*val)*pesawat[i].kecepatan);
+			// }else{
+			// 	pesawat[i].posisi.x = pesawat[i].posisi.x+(cos(pesawat[i].arah*val)*pesawat[i].kecepatan);
+			// 	pesawat[i].posisi.y = pesawat[i].posisi.y-(sin(pesawat[i].arah*val)*pesawat[i].kecepatan);
+			// }
 		}
 	}
-
-
+	//jalanpeluru==========================================================================================
 	for (int i =0; i<ww ; i++){
 		if(peluru[i].status==0){
 		peluru[i].posisi.x = peluru[i].posisi.x+(cos(peluru[i].arah*val)*peluru[i].kecepatan);
