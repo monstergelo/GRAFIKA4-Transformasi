@@ -44,8 +44,8 @@ void bufferDrawDot(titik p, warna c){
 
 //mengganti nilai seluruh pixel buffer menjadi background color untuk
 void refreshBuffer(titik p0, titik p1){
-    warna warna_default = {25, 25, 255, 255};
-
+    warna warna_default = {70, 70, 70, 255};
+    warna warna_grid = {50, 50, 50, 255};
     //
     //       *1
     // *0
@@ -54,10 +54,17 @@ void refreshBuffer(titik p0, titik p1){
     if(p0.x < p1.x && p0.y < p1.y){
         for(i = p0.x; i < p1.x; i++)
             for(j = p0.y; j < p1.y; j++){
-                buffer_r[i][j] = warna_default.r;
-                buffer_g[i][j] = warna_default.g;
-                buffer_b[i][j] = warna_default.b;
-                buffer_a[i][j] = warna_default.a;
+                if (i%50==0 || j%50==0) {
+                    buffer_r[i][j] = warna_grid.r;    
+                    buffer_g[i][j] = warna_grid.g;    
+                    buffer_b[i][j] = warna_grid.b;    
+                    buffer_a[i][j] = warna_grid.a;    
+                } else {
+                    buffer_r[i][j] = warna_default.r;
+                    buffer_g[i][j] = warna_default.g;
+                    buffer_b[i][j] = warna_default.b;
+                    buffer_a[i][j] = warna_default.a;
+                }
             }
 
         return;
@@ -139,6 +146,111 @@ void loadBuffer(){
         }
 }
 
+void bufferDrawLine(titik p0, titik p1, warna c) {
+	int dx, dy, x, y, x_end, y_end, px, py, cx1, cx2, cy1, cy2;
+	titik p2;
+	titik p3;
+
+	dx = abs(p0.x - p1.x);
+	dy = abs(p0.y - p1.y);
+
+	px = 2 * dx - dy;
+	py = 2 * dy - dx;
+	cx1 = 2 * dy;
+	cx2 = 2 * (dy-dx);
+	cy1 = 2 * dx;
+	cy2 = 2 * (dx-dy);
+
+	if (dy <= dx) {
+		if (p0.x > p1.x) {
+			x = p1.x;
+			y = p1.y;
+			x_end = p0.x;
+			p3.y = p0.y;
+		} else {
+			x = p0.x;
+			y = p0.y;
+			x_end = p1.x;
+			p3.y = p1.y;
+		}
+
+		//setpixel(x, y)
+		p2.x = x;
+		p2.y = y;
+		bufferDrawDot(p2, c);
+
+		int dy;
+		if(p2.y > p3.y)
+		{
+			dy = -1;
+		}
+		else
+		{
+			dy = 1;
+		}
+
+		while (x-1 < x_end) {
+			x++;
+
+			if (px <= 0) {
+				px += cx1;
+			} else {
+				y += dy;
+				px += cx2;
+			}
+
+			//setpixel(x,y)
+			p2.x = x;
+			p2.y = y;
+
+			bufferDrawDot(p2, c);
+		}
+	} else {
+		if (p0.y >= p1.y) {
+			x = p1.x;
+			y = p1.y;
+			y_end = p0.y;
+			p3.x = p0.x;
+		} else {
+			x = p0.x;
+			y = p0.y;
+			y_end = p1.y;
+			p3.y = p1.x;
+		}
+
+		//setpixel(x, y)
+		p2.x = x;
+		p2.y = y;
+		bufferDrawDot(p2, c);
+
+		int dx;
+		if(p2.x >= p3.x)
+		{
+			dx = -1;
+		}
+		else
+		{
+			dx = 1;
+		}
+
+		while (y-1 < y_end) {
+			y++;
+
+			if (py <= 0) {
+				py += cy1;
+			} else {
+				x += dx;
+				py += cy2;
+			}
+
+			//setpixel(x,y)
+			p2.x = x;
+			p2.y = y;
+			bufferDrawDot(p2, c);
+		}
+	}
+}
+
 void bufferDrawPlane(titik* p, warna c, int sisi){
 	int i= 0;
 
@@ -149,6 +261,8 @@ void bufferDrawPlane(titik* p, warna c, int sisi){
 
 	bufferDrawLine(p[i], p[0], c);
 }
+
+
 
 void bufferDrawCircle(titik p, int radius, warna c){
     inline void bufferDrawHorizontalLine(int x1, int x2, int y, warna c)
@@ -252,28 +366,81 @@ void fill(titik p, warna c, warna bound_c) {
 }
 
 // NGECOBA NGEBENERIN GARIS, TP TEMBAKANNYA JADI RUSAK...
-void bufferDrawLine(titik p0, titik p1, warna c) {
-    int x0 = p0.x; int x1 = p1.x; int y0 = p0.y; int y1 = p1.y;
-    int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
-    int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1;
-    int err = (dx>dy ? dx : -dy)/2, e2;
-
-    for(;;){
-      titik temp = {x0, y0};
-      bufferDrawDot(temp, c);
-      if (x0==x1 && y0==y1) break;
-      e2 = err;
-      if (e2 >-dx) { err -= dy; x0 += sx; }
-      if (e2 < dy) { err += dx; y0 += sy; }
-    }
-}
-
-void bufferDrawPlaneSolidCitra(titik *citra, titik pivot, warna c, warna bound_c, int sisi) {
-  int i;
-  titik* posAbs = (titik*) malloc(8 * sizeof(titik));
-  for (i = 0; i < sisi; i++) {
-    posAbs[i].x = citra[i].x + pivot.x;
-    posAbs[i].y = citra[i].y + pivot.y;
-  }
-  bufferDrawPlaneSolid(posAbs, c, bound_c, sisi);
-}
+// void bufferDrawLineX(titik p0, titik p1, warna c) {
+//     titik p_temp;
+//     float dx, dy, p;
+//     int i, x, y, xend;
+//     int x1 = p0.x; int x2 = p1.x; int y1 = p0.y; int y2 = p1.y;
+//     dx = abs(x2 - x1);
+//     dy = abs(y2 - y1);
+//     p = 2 * dy - dx;
+//     if (x1 > x2) {
+//         x = x2;
+//         y = y2;
+//         xend = x1;
+//     } else {
+//         x = x1;
+//         y = y1;
+//         xend = x2;
+//     }
+//     p_temp.x = x; p_temp.y = y;
+//     bufferDrawDot(p_temp, c);
+//     while (x < xend) {
+//         if (p < 0) {
+//             x = x + 1;
+//             p_temp.x = x; p_temp.y = y;
+//             bufferDrawDot(p_temp, c);
+//             p = p + (2 * dy);
+//         } else {
+//             x = x + 1;
+//             y = y + 1;
+//             p_temp.x = x; p_temp.y = y;
+//             bufferDrawDot(p_temp, c);
+//             p = p + (2 * dy) - (2 * dx);
+//         }
+//     }
+// }
+//
+// void bufferDrawLineY(titik p0, titik p1, warna c) {
+//     titik p_temp;
+//     float dx, dy, p;
+//     int i, x, y, yend;
+//     int x1 = p0.x; int x2 = p1.x; int y1 = p0.y; int y2 = p1.y;
+//     dx = abs(x2 - x1);
+//     dy = abs(y2 - y1);
+//     p = 2 * dx - dy;
+//     if (y1 > y2) {
+//         x = x2;
+//         y = y2;
+//         yend = y1;
+//     } else {
+//         x = x1;
+//         y = y1;
+//         yend = y2;
+//     }
+//     p_temp.x = x; p_temp.y = y;
+//     bufferDrawDot(p_temp, c);
+//     while (y < yend) {
+//         if (p < 0) {
+//             y = y + 1;
+//             p_temp.x = x; p_temp.y = y;
+//             bufferDrawDot(p_temp, c);
+//             p = p + (2 * dx);
+//         } else {
+//             y = y + 1;
+//             x = x + 1;
+//             p_temp.x = x; p_temp.y = y;
+//             bufferDrawDot(p_temp, c);
+//             p = p + (2 * dx) - (2 * dy);
+//         }
+//     }
+// }
+//
+// void bufferDrawLine(titik p0, titik p1, warna c) {
+//     int x1 = p0.x; int x2 = p1.x; int y1 = p0.y; int y2 = p1.y;
+//     if (abs(x2 - x1) >= abs(y2 - y1)) {
+//         bufferDrawLineX(p0, p1, c);
+//     } else {
+//         bufferDrawLineY(p0, p1, c);
+//     }
+// }
