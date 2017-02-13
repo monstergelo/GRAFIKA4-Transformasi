@@ -27,3 +27,4 @@ void gambarHancur(titik p);			 //menggambar animasi hancur pada titik p;
 
 void setupCitraPesawat(objekTabrak *pesawat);
 void setupCitraPeluru(objekTabrak *peluru);
+void setupCitraPecah(objekTabrak *pecah, int type);

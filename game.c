@@ -16,8 +16,10 @@ void postUpdate();	 	//(1)cek kolisi, (2)loadbuffer ke layar
 
 objekTabrak pesawat[10];
 objekTabrak peluru[10];
-int pesawatterakhir;
-int peluruterakhir;
+objekTabrak objek[10];
+int pesawatterakhir = 0;
+int peluruterakhir = 0;
+int objekterakhir = 0;
 titik pl0 = {0,0};
 titik pl1 = {1366,700};
 pthread_t thread0; 		//thread input capture
@@ -68,6 +70,7 @@ int main(){
 	{
 		peluru[in].status = -1;
 		pesawat[in].status = -1;
+		objek[in].status = -1;
 	}
 
 	spawnObjek('a',p0);

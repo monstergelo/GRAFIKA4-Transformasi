@@ -55,13 +55,7 @@ int cekJedaTembakan() {
 void gambarTembakan() {
 	warna x = {100,99,0,98};
 
-	for (int i = 600; i < 950; i++) {
-		for (int j = 550; j < 650; j++) {
-			titik e = {j, i};	
-		
-			bufferDrawDot(e, x);	
-		}
-	}
+	drawTank(530, 610);
 
 	int theta = (prime.kemiringan);
 	int range = 300;

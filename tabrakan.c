@@ -12,9 +12,12 @@
 
 extern int pesawatterakhir;
 extern int peluruterakhir;
+extern int objekterakhir;
 tembakan prime;
+
 extern objekTabrak pesawat[10];
 extern objekTabrak peluru[10];
+extern objekTabrak objek[10];
 
 
 void cekTabrakanObjek(int offset){
@@ -48,30 +51,34 @@ void hancurObjek(objekTabrak* o){
 void jalanObjek(){
 	int qq = pesawatterakhir;
 	int ww = peluruterakhir;
+	int tt = objekterakhir;
 	titik putar = {600,1050};
 
 	double val = PI / 180.0;
 
 	//jalanpesawat==========================================================================================
-	for (int i =0; i<qq ; i++){
+	for (int i =0; i<10 ; i++){
 
 		if(pesawat[i].status==0){
 			titik temp = pesawat[i].posisi;
+			titik* temp2 = pesawat[i].citra;
 			pesawat[i].posisi = rotasi(putar, temp, 1);
-			// if(pesawat[i].arah<=180){
-			// 	pesawat[i].posisi.x = pesawat[i].posisi.x+(cos(pesawat[i].arah*val)*pesawat[i].kecepatan);
-			// 	pesawat[i].posisi.y = pesawat[i].posisi.y+(sin(pesawat[i].arah*val)*pesawat[i].kecepatan);
-			// }else{
-			// 	pesawat[i].posisi.x = pesawat[i].posisi.x+(cos(pesawat[i].arah*val)*pesawat[i].kecepatan);
-			// 	pesawat[i].posisi.y = pesawat[i].posisi.y-(sin(pesawat[i].arah*val)*pesawat[i].kecepatan);
-			// }
+			//pesawat[i].citra = rotasibanyak(putar, temp2, 1, 8);
 		}
 	}
 	//jalanpeluru==========================================================================================
-	for (int i =0; i<ww ; i++){
+	for (int i =0; i<10 ; i++){
 		if(peluru[i].status==0){
 		peluru[i].posisi.x = peluru[i].posisi.x+(cos(peluru[i].arah*val)*peluru[i].kecepatan);
 		peluru[i].posisi.y = peluru[i].posisi.y-(sin(peluru[i].arah*val)*peluru[i].kecepatan);
+		}
+	}
+
+	//jalanobjek==========================================================================================
+	for (int i =0; i<10 ; i++){
+		if(objek[i].status==0){
+		objek[i].posisi.x = objek[i].posisi.x+(cos(objek[i].arah*val)*objek[i].kecepatan);
+		objek[i].posisi.y = objek[i].posisi.y-(sin(objek[i].arah*val)*objek[i].kecepatan);
 		}
 	}
 }
@@ -101,6 +108,55 @@ void setupCitraPeluru(objekTabrak *peluru) {
 	citra[4].x = 10; citra[4].y = 25;
 }
 
+void setupCitraPecah(objekTabrak *pecah, int type) {
+	pecah->citra = (titik*) malloc(5 * sizeof(titik));
+	int xp = pecah->posisi.x; int yp = pecah->posisi.y;
+	titik* citra = pecah->citra;
+	int xof = xp-600;
+	int yof = yp-200;
+
+	if(type == 0)
+	{
+		titik puing[] = {{xof,yof+25}, {xof,yof+50}, {xof+25,yof+45}, {xof+15,yof+25}};
+		citra[0] = puing[0];
+		citra[1] = puing[1];
+		citra[2] = puing[2];
+		citra[3] = puing[3];
+	}
+	else if(type == 1)
+	{
+		titik puing[] = {{xof+90,yof+45}, {xof+190,yof+45}, {xof+190,yof+70}, {xof+90, yof+70}};
+		citra[0] = puing[0];
+		citra[1] = puing[1];
+		citra[2] = puing[2];
+		citra[3] = puing[3];
+	}
+	else if(type == 2)
+	{
+		titik puing[] = {{xof+70,yof}, {xof+85,yof}, {xof+105, yof+45}, {xof+80,yof+45}};
+		citra[0] = puing[0];
+		citra[1] = puing[1];
+		citra[2] = puing[2];
+		citra[3] = puing[3];
+	}
+	else if(type == 3)
+	{
+		titik puing[] = {{xof+70,yof+70}, {xof+95,yof+70}, {xof+80, yof+120}, {xof+55, yof+120}};
+		citra[0] = puing[0];
+		citra[1] = puing[1];
+		citra[2] = puing[2];
+		citra[3] = puing[3];
+	}
+	else if(type == 4)
+	{
+		titik puing[] = {{xof+190,yof+45}, {xof+220,yof+50}, {xof+225, yof+70}, {xof+190, yof+70}};
+		citra[0] = puing[0];
+		citra[1] = puing[1];
+		citra[2] = puing[2];
+		citra[3] = puing[3];
+	}
+}
+
 //membuat objek baru(a=pesawat; b=peluru) pada posisi p
 void spawnObjek(char t, titik p){
 	if (t=='a'){
@@ -114,13 +170,45 @@ void spawnObjek(char t, titik p){
 		pesawatterakhir++;
 
 	} else if (t=='b') {
-
 		peluru[peluruterakhir].posisi = p;
 		peluru[peluruterakhir].kecepatan = 25;
 		peluru[peluruterakhir].arah = 90 - prime.kemiringan;
 		peluru[peluruterakhir].status = 0;
 		setupCitraPeluru(&peluru[peluruterakhir]);
 		peluruterakhir++;
+	}
+
+	else if (t=='z') {
+		objek[objekterakhir].posisi = p;
+		objek[objekterakhir].kecepatan = 25;
+		objek[objekterakhir].arah = 270;
+		objek[objekterakhir].status = 0;
+		setupCitraPecah(&objek[objekterakhir], 0);
+		objekterakhir++;
+	}
+	else if (t=='x') {
+		objek[objekterakhir].posisi = p;
+		objek[objekterakhir].kecepatan = 25;
+		objek[objekterakhir].arah = 260;
+		objek[objekterakhir].status = 0;
+		setupCitraPecah(&objek[objekterakhir], 1);
+		objekterakhir++;
+	}
+	else if (t=='y') {
+		objek[objekterakhir].posisi = p;
+		objek[objekterakhir].kecepatan = 25;
+		objek[objekterakhir].arah = 300;
+		objek[objekterakhir].status = 0;
+		setupCitraPecah(&objek[objekterakhir], 2);
+		objekterakhir++;
+	}
+	else if (t=='w') {
+		objek[objekterakhir].posisi = p;
+		objek[objekterakhir].kecepatan = 25;
+		objek[objekterakhir].arah = 240;
+		objek[objekterakhir].status = 0;
+		setupCitraPecah(&objek[objekterakhir], 3);
+		objekterakhir++;
 	}
 }
 
@@ -130,6 +218,20 @@ void gambarHancur(titik p) {
 	static int ii = 0;
 	static int stage = 0;
 	//titik pd = {p.x+10,p.y-10};
+	if(ii==0 && stage == 0){
+		titik pp = p;
+		spawnObjek('z', p);
+		p.x = pp.x+5; p.y =pp.y+9;
+
+		spawnObjek('x', p);
+		p.x = pp.x-20; p.y =pp.y-14;
+
+		spawnObjek('y', p);
+		p.x = pp.x-5; p.y =pp.y+20;
+
+		spawnObjek('w', p);
+	}
+
 	if(ii<10 && stage == 0){
 		warna c = {255, 10+20*ii, 0, 255};
 		bufferDrawCircle(p, 10-1*ii, c);
@@ -145,19 +247,6 @@ void gambarHancur(titik p) {
 		bufferDrawCircle(p, 20-2*ii, c);
 		ii--;
 	}
-	/* Use this one for bigger explosion
-	 *
-	for (i=0;i<10;i++) {
-		usleep(50000-(i*5000));
-		warna c = {255, 10+20*i, 0, 255};
-		bufferDrawCircle(p, 20-2*i, c);
-	}
-	for (;i>=0;i--) {
-		usleep(100000-(i*10000));
-		warna c = {255, 200-15*i, 0, 255};
-		bufferDrawCircle(p, 40-4*i, c);
-	}
-	* */
 }
 
 
@@ -178,6 +267,13 @@ void gambarObjek() {
 	for (int i = 0; i < peluruterakhir; i++) {
 		if (peluru[i].status == 0) {
 			bufferDrawPlaneSolidCitra(peluru[i].citra, peluru[i].posisi, green, red, 5);
+		}
+	}
+
+	//draw debris
+	for (int i = 0; i < objekterakhir; i++) {
+		if (objek[i].status == 0) {
+			bufferDrawPlaneSolidCitra(objek[i].citra, objek[i].posisi, green, red, 4);
 		}
 	}
 }

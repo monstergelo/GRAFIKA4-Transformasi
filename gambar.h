@@ -12,9 +12,8 @@ unsigned char buffer_g[GLOBAL_LAYAR_X][GLOBAL_LAYAR_Y];
 unsigned char buffer_b[GLOBAL_LAYAR_X][GLOBAL_LAYAR_Y];
 unsigned char buffer_a[GLOBAL_LAYAR_X][GLOBAL_LAYAR_Y];
 
-warna cRed ={255,25,25,255};
-warna cGreen = {25,255,25,255};
-warna cBlue = {25,25,255,255};
+//mengembalikan titik dengan nilai x dan y sesuai argumen
+titik setTitik(int x, int y);
 
 // Melakukan assign warna c pada
 // posisi c pada matriks framebuffer
@@ -33,7 +32,9 @@ void refreshBuffer(titik p0, titik p1);
 void loadBuffer();
 
 void bufferDrawPlaneSolid(titik* p, warna c, warna bound_c, int sisi);	//membuat bidang yang menyambungkan titik p[0] ke p[1], p[1] ke p[2], ...., p[n] ke p[0]
-	                                                //dengan warna solid
+	                                                					//dengan warna solid
+
+void bufferDrawPlaneSolidCitra(titik* citra, titik origin, warna fill, warna bound, int sisi); //membuat gambar dengan origin sebagai posisi
 
 void fill(titik p, warna c, warna bound_c);	//melakukan pewarnaan flood denganp sebagai titik api
 
@@ -51,5 +52,6 @@ void drawPlane(int xof, int yof);
 
 // membuat tank dengan xof sebagai ofside kiri, yof sebagai ofset atas
 void drawTank(int xof, int yof);
+
 
 #endif //GAMBAR_H
