@@ -365,6 +365,32 @@ void fill(titik p, warna c, warna bound_c) {
 	}
 }
 
+void drawPlane(int xof, int yof) {
+    titik ekorPesawatAtas[] = {{xof,yof+25}, {xof,yof+50}, {xof+25,yof+45}, {xof+15,yof+25}};
+    titik ekorPesawatBawah[] = {{xof,yof+50}, {xof+15,yof+70}, {xof+90,yof+70}, {xof+90,yof+45}, {xof+25,yof+45}};
+    titik badanPesawat[] = {{xof+90,yof+45}, {xof+190,yof+45}, {xof+190,yof+70}, {xof+90, yof+70}};
+    titik sayapAtas[] = {{xof+70,yof}, {xof+85,yof}, {xof+105, yof+45}, {xof+80,yof+45}};
+    titik sayapBawah[] = {{xof+70,yof+70}, {xof+95,yof+70}, {xof+80, yof+120}, {xof+55, yof+120}};
+    titik kepalaPesawat[] = {{xof+190,yof+45}, {xof+220,yof+50}, {xof+225, yof+70}, {xof+190, yof+70}};
+    titik pMulutPesawat = {xof+225, yof+62};    
+    bufferDrawPlaneSolid(&ekorPesawatAtas, cRed, cRed, 4);
+    bufferDrawPlaneSolid(&ekorPesawatBawah, cRed, cRed, 5);
+    bufferDrawPlaneSolid(&badanPesawat, cRed, cRed, 4);
+    bufferDrawPlaneSolid(&sayapAtas, cRed, cRed, 4);
+    bufferDrawPlaneSolid(&kepalaPesawat, cRed, cRed, 4);
+    bufferDrawCircle(pMulutPesawat, 9, cRed);
+}
+
+void drawTank(int xof, int yof) {
+    titik badanTank[] = {{xof+20,yof+90}, {xof+120,yof+90}, {xof+140,yof+60}, {xof,yof+60}};
+    titik pShutterCircle = {xof+70,yof+60};
+    titik tankGun[] = {{xof+63,yof+40}, {xof+77,yof+40}, {xof+77,yof}, {xof+64,yof}};   
+    bufferDrawPlaneSolid(&badanTank, cBlue, cBlue, 4);
+    bufferDrawCircle(pShutterCircle, 20, cBlue);
+    bufferDrawPlaneSolid(&tankGun, cBlue, cBlue, 4);
+}
+
+
 // NGECOBA NGEBENERIN GARIS, TP TEMBAKANNYA JADI RUSAK...
 // void bufferDrawLineX(titik p0, titik p1, warna c) {
 //     titik p_temp;

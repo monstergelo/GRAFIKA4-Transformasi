@@ -12,6 +12,10 @@ unsigned char buffer_g[GLOBAL_LAYAR_X][GLOBAL_LAYAR_Y];
 unsigned char buffer_b[GLOBAL_LAYAR_X][GLOBAL_LAYAR_Y];
 unsigned char buffer_a[GLOBAL_LAYAR_X][GLOBAL_LAYAR_Y];
 
+warna cRed ={255,25,25,255};
+warna cGreen = {25,255,25,255};
+warna cBlue = {25,25,255,255};
+
 // Melakukan assign warna c pada
 // posisi c pada matriks framebuffer
 void bufferDrawDot(titik p, warna c);
@@ -41,5 +45,11 @@ void bufferDrawPlane(titik* p, warna c, int sisi);			//membuat bidang yang menya
 void bufferDrawCircle(titik p, int radius, warna c);	//membuat lingkaran dengan p sebagai pusat
 int  dotDistance(titik p1, titik p2);		//mengembalikan jarak antara p1 dan p2
 //================================================
+
+// membuat pesawat dengan xof sebagai ofside kiri, yof sebagai ofset atas
+void drawPlane(int xof, int yof);
+
+// membuat tank dengan xof sebagai ofside kiri, yof sebagai ofset atas
+void drawTank(int xof, int yof);
 
 #endif //GAMBAR_H
