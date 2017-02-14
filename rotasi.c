@@ -14,21 +14,20 @@ titik rotasi (titik p0, titik p1, int d) {
 	
 	p.x = ((p1.x-p0.x) * cosd ) - ((p1.y-p0.y) * sind) + p0.x;
 	p.y = ((p1.x-p0.x) * sind ) + ((p1.y-p0.y) * cosd) + p0.y;
-	
+	printf("rotasi:%d %d\n", p.x, p.y);
 	 
 	return p;
 	
 	
 }
 
-titik* rotasibanyak (titik p0, titik* p1, int d, int l) {
+void rotasibanyak (titik p0, titik* p1, int d, int l) {
 //rotasi titik-titik pada array p1 dengan panjang l terhadap pivot p0 sebesar d derajat
-	titik p[l];
+	titik* p = p1;
 	int i;
-	for (i=0; i<l; l++) {
-		p[i] = rotasi(p0, p1[i], d);
+	for (i=0; i<l; i++) {
+		p1[i] = rotasi(p0, p1[i], d);
 	}
-	return p;
 }
 
 

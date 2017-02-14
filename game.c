@@ -42,8 +42,8 @@ int main(){
 //**setup-pendengar-keyboard********************************************************************
 	// Input keyboard device file
     //const char *dev = "/dev/input/by-id/usb-_USB_Keyboard-event-kbd";
-    //const char *dev = "/dev/input/event3";
-    const char *dev = "/dev/input/by-id/usb-_USB_Keyboard-event-kbd";
+    const char *dev = "/dev/input/event3";
+    //const char *dev = "/dev/input/by-id/usb-_USB_Keyboard-event-kbd";
     // Open device for reference
     fd = open(dev, O_RDONLY);
 
