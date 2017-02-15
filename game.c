@@ -179,7 +179,6 @@ void postUpdate(){
 	for(int i=0; i<1; i++){
 		if(pesawat[i].status == 1){
 			gambarHancur(pesawat[i].posisi);
-			pesawat[i].posisi.y += 5;
 			pesawat[i].status = -1;
 		}
 	}

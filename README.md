@@ -2,23 +2,16 @@
 
 #compile
 
-sandbox: gcc -o sandbox sandbox.c gambar.c glob_var_type.h framebuffer_init.c -lm -lpthread
+game : gcc -o game game.c gambar.c glob_var_type.h tembakan.c rotasi.c refleksi.c tabrakan.c framebuffer_init.c -lm -lpthread
 
 
-
-#Catatan
-
-Kalau mau nyoba gambar bikin driver, kalo mau template driver liat sandbox.c
-
-
-
-#Bagi tugas
+#Pembagian tugas
 
 Tata    :Rotasi
 
 Kharis  :Refleksi
 
-Rangga  :Objek gerak
+Rangga  :Objek gerak, game-loop
 
 Dandy   :Translasi
 
@@ -26,5 +19,6 @@ Amal    :Gambar
 
 Raihan  :Skala
 
+Bimo 	:Koordinasi tim
 
 
