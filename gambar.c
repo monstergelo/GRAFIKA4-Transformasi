@@ -50,6 +50,17 @@ void bufferDrawDot(titik p, warna c){
     buffer_a[p.x][p.y] = c.a;
 }
 
+titik getMidPoint(titik *citra, int sisi) {
+  titik ans;
+  int i = 0, midx = 0, midy = 0;
+  for (i = 0; i < sisi; i++) {
+    midx += citra[i].x;
+    midy += citra[i].y;
+  }
+  midx /= sisi; midy /= sisi;
+  ans.x = midx; ans.y = midy;
+  return ans;
+}
 //mengganti nilai seluruh pixel buffer menjadi background color untuk
 void refreshBuffer(titik p0, titik p1){
     warna warna_default = {25, 25, 255, 255};
@@ -268,7 +279,7 @@ void drawPlane(int xof, int yof) {
     titik sayapAtas[] = {{xof+70,yof}, {xof+85,yof}, {xof+105, yof+45}, {xof+80,yof+45}};
     titik sayapBawah[] = {{xof+70,yof+70}, {xof+95,yof+70}, {xof+80, yof+120}, {xof+55, yof+120}};
     titik kepalaPesawat[] = {{xof+190,yof+45}, {xof+220,yof+50}, {xof+225, yof+70}, {xof+190, yof+70}};
-    titik pMulutPesawat = {xof+225, yof+62};    
+    titik pMulutPesawat = {xof+225, yof+62};
     bufferDrawPlaneSolid(ekorPesawatAtas, cRed, cRed, 4);
     bufferDrawPlaneSolid(ekorPesawatBawah, cRed, cRed, 5);
     bufferDrawPlaneSolid(badanPesawat, cRed, cRed, 4);
@@ -280,7 +291,7 @@ void drawPlane(int xof, int yof) {
 void drawTank(int xof, int yof) {
     titik badanTank[] = {{xof+20,yof+90}, {xof+120,yof+90}, {xof+140,yof+60}, {xof,yof+60}};
     titik pShutterCircle = {xof+70,yof+60};
-    titik tankGun[] = {{xof+63,yof+40}, {xof+77,yof+40}, {xof+77,yof}, {xof+64,yof}};   
+    titik tankGun[] = {{xof+63,yof+40}, {xof+77,yof+40}, {xof+77,yof}, {xof+64,yof}};
     bufferDrawPlaneSolid(badanTank, cRed, cRed, 4);
     bufferDrawCircle(pShutterCircle, 20, cRed);
     bufferDrawPlaneSolid(tankGun, cRed, cRed, 4);

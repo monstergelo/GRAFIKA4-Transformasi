@@ -14,6 +14,7 @@ typedef struct{
 extern objekTabrak pesawat[10];
 extern objekTabrak peluru[10];
 extern objekTabrak objek[10];
+extern objekTabrak propeller[10];
 
 void cekTabrakanObjek(int offset);   //cek apakah terdapat peluru yang berada sejauh oTaffset dari pesawat,
 								     //jika iya kedua objek memiliki isTabrakan tarue
@@ -28,3 +29,4 @@ void gambarHancur(titik p);			 //menggambar animasi hancur pada titik p;
 void setupCitraPesawat(objekTabrak *pesawat);
 void setupCitraPeluru(objekTabrak *peluru);
 void setupCitraPecah(objekTabrak *pecah, int type);
+void setupCitraPropeller(objekTabrak *propeller);

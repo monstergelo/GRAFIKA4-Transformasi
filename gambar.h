@@ -53,5 +53,6 @@ void drawPlane(int xof, int yof);
 // membuat tank dengan xof sebagai ofside kiri, yof sebagai ofset atas
 void drawTank(int xof, int yof);
 
+titik getMidPoint(titik *citra, int sisi);
 
 #endif //GAMBAR_H

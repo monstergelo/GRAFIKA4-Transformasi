@@ -17,6 +17,7 @@ void postUpdate();	 	//(1)cek kolisi, (2)loadbuffer ke layar
 objekTabrak pesawat[10];
 objekTabrak peluru[10];
 objekTabrak objek[10];
+objekTabrak propeller[10];
 int pesawatterakhir = 0;
 int peluruterakhir = 0;
 int objekterakhir = 0;

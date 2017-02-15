@@ -39,31 +39,3 @@ void reflectDotArray(titik* p, int size, char axis, titik pAxis){
 		p[i] = reflectDot(p[i], axis, pAxis);
 	}
 }
-
-int main(){
-	titik p[3];
-	p[0].x = 4;
-	p[0].y = 6;
-	p[1].x = 9;
-	p[1].y = 1;
-	p[2].x = 0;
-	p[2].y = 10;
-	titik pAxis;
-	pAxis.x = 10;
-	pAxis.y = 10;
-	titik pResult = reflectDot(p[0], 'x', pAxis);
-	printf("%d, %d\n", pResult.x, pResult.y);
-	pResult = reflectDot(p[0], 'y', pAxis);
-	printf("%d, %d\n", pResult.x, pResult.y);
-
-	reflectDotArray(p, 3, 'x', pAxis);
-	for(int i=0; i<3; i++){
-		printf("pX array %d, %d\n", p[i].x, p[i].y);
-	}
-
-	reflectDotArray(p, 3, 'y', pAxis);
-	for(int i=0; i<3; i++){
-		printf("pY array %d, %d\n", p[i].x, p[i].y);
-	}
-	return 0;
-}
